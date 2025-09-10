@@ -100,14 +100,6 @@ def download_sponsor_videos(chat, limit):
             except Exception as e:
                 print(f"❌ file Error : {e}")
 
-import os
-import shutil
-
-original_path = "downloads/original_name.mp4"
-new_path = "downloads/my_custom_video.mp4"
-
-shutil.move(original_path, new_path)
-print(f"Renamed to: {new_path}")
 # exporting :     # final = concatenate_videoclips(clips, method="compose")
     # final.write_videofile("with_sponsors.mp4", codec="libx264", audio_codec="aac")
 
