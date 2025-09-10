@@ -5,6 +5,12 @@ from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 from telethon.tl.types import InputPeerChannel
 import tqdm
 import time
+import subprocess
+import os
+from telethon.sync import TelegramClient
+from dotenv import load_dotenv
+from tqdm import tqdm
+
 # Load .env
 load_dotenv()
 
@@ -57,6 +63,22 @@ def get_available_filename(base_name, ext=".mp4"):
         filename = f"{base_name}_{i}{ext}"
         i += 1
     return filename
+
+def edit_videos(video1, video2, logo, output):
+    """
+    Calls the compiled C++ video editor binary to process videos.
+    """
+    cmd = [
+        "./video_editor",
+        video1,
+        video2,
+        logo,
+        output
+    ]
+    print(f"Running video editor: {' '.join(cmd)}")
+    subprocess.run(cmd, check=True)
+    print(f"Video editing complete! Output saved as {output}")
+
 
 
 def download_sponsor_videos(chat, limit):
@@ -222,7 +244,7 @@ def download_and_forward(chat, limit):
 
                 if filename:
 
-                    # edited_path = edit_video(filename)
+                    edited_path = edit_videos(video1_path, video2_path, logo_path, output_path)
                     print(f"\n✅ Downloaded: {filename}")
 
                     # Send to another channel
